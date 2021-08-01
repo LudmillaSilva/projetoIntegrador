@@ -1,7 +1,8 @@
-package com.ludmilla.projetointegrador
+package com.ludmilla.integratorproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ludmilla.projetointegrador.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
