@@ -1,12 +1,21 @@
-package com.ludmilla.integratorproject
+package com.ludmilla.integratorproject.data.remotesource
 
+import com.ludmilla.integratorproject.data.response.*
 import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RemoteSource {
 
+    @GET("movie/popular")
+    fun getPopularMovies(@Query("api_key")api_key:String,
+                         @Query("language") language:String,
+                         @Query("page") page:Int): Call<ResponseMovies>
+
+
+/*
     @GET("movie/popular")
     fun getPopularMovies(): Single<ResponseMovies>
 
@@ -27,4 +36,5 @@ interface RemoteSource {
 
     @GET("discover/movie")
     fun getMoviesByGenre(@Query("with_genres", encoded = true) genresId: String): Single<ResponseMovies>
+*/
 }

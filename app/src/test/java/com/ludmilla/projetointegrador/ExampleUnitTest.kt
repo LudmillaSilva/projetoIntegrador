@@ -1,4 +1,4 @@
-package com.ludmilla.projetointegrador
+package com.ludmilla.integratorproject
 
 import org.junit.Test
 

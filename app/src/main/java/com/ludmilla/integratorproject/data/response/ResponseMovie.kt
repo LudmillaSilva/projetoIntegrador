@@ -1,9 +1,9 @@
-package com.ludmilla.integratorproject
+package com.ludmilla.integratorproject.data.response
 
 import com.google.gson.annotations.SerializedName
 
 
-data class Response(
+data class ResponseMovie(
     @SerializedName("id")
     val id: Int,
     @SerializedName("poster_path")

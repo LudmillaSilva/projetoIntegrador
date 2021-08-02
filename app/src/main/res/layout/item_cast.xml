@@ -34,11 +34,10 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/lato_regular"
         android:text="@string/role"
-        android:textColor="@color/movieInfoTextColor"
+        android:textColor="@color/colorevaluation"
         app:layout_constraintEnd_toEndOf="@+id/personName"
         app:layout_constraintStart_toStartOf="@+id/personName"
         app:layout_constraintTop_toBottomOf="@+id/personName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>

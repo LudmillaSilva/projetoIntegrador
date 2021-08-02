@@ -79,7 +79,6 @@
 
     <TextView
         android:id="@+id/movieYear"
-        style="@style/movieAdditionalInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/xsmall"
@@ -90,7 +89,6 @@
 
     <TextView
         android:id="@+id/ageRestriction"
-        style="@style/movieAdditionalInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/medium"
@@ -101,7 +99,6 @@
 
     <TextView
         android:id="@+id/movieDuration"
-        style="@style/movieAdditionalInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/medium"

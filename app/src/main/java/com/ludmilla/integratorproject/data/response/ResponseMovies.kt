@@ -1,8 +1,8 @@
-package com.ludmilla.integratorproject
+package com.ludmilla.integratorproject.data.response
 
 import com.google.gson.annotations.SerializedName
 
 data class ResponseMovies(
     @SerializedName("results")
-    val results: List<Response>
+    val results: List<ResponseMovie>
 )
