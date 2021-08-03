@@ -9,11 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Network {
     fun getService() {
-/*
+
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
 
-        val httpClient = OkHttpClient.Builder()
+/*        val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(logging)
         httpClient.addInterceptor { chain ->
             val original = chain.request()
