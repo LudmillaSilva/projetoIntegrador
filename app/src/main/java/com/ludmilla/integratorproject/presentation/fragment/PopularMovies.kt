@@ -10,6 +10,7 @@ import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.data.factory.Constants
 import com.ludmilla.integratorproject.data.remotesource.RemoteSource
 import com.ludmilla.integratorproject.data.response.ResponseMovies
+import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class PopularMovies : Fragment() {
 
+    lateinit var moviesAdapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,9 @@ class PopularMovies : Fragment() {
         val rvmovies = view.findViewById<RecyclerView>(R.id.rvMovies)
         val rvgenre = view.findViewById<RecyclerView>(R.id.rvGenre)
 
+        moviesAdapter = MoviesAdapter(context = view.context)
+        rvmovies.adapter= moviesAdapter
+
         getPopularMovies()
     }
 
@@ -55,8 +60,9 @@ class PopularMovies : Fragment() {
             ) {
                 if (response != null && response.code() == 200) {
                     val result = response.body()
-                    result?.results?.forEach { movie ->
-                        movie.poster
+                    response.body()?.results?.let {
+                        moviesAdapter.listmovie.addAll(it)
+                        moviesAdapter.notifyDataSetChanged()
                     }
                 }
             }

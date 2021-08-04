@@ -3,7 +3,6 @@ package com.ludmilla.integratorproject.domain
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-
 @Parcelize
 data class Movie(
     val img: String? = null,
