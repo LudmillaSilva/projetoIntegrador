@@ -14,6 +14,10 @@ interface RemoteSource {
                          @Query("language") language:String,
                          @Query("page") page:Int): Call<ResponseMovies>
 
+    @GET("genre/movie/list")
+    fun getAllGenres(@Query("api_key")api_key:String,
+                     @Query("language") language:String): Call<ResponseGenre>
+
 
 /*
     @GET("movie/popular")
@@ -28,8 +32,6 @@ interface RemoteSource {
     @GET("movie/{movie_id}/credits")
     fun getCast(@Path("movie_id") movieId: Int): Single<ResponseCast>
 
-    @GET("genre/movie/list")
-    fun getAllGenres(): Single<ResponseGenre>
 
     @GET("movie/{movie_id}/release_dates")
     fun getCertification(@Path("movie_id") movieId: Int): Single<ResponseCertification>

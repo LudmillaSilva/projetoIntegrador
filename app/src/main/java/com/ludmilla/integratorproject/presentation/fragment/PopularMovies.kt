@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.data.factory.Constants
 import com.ludmilla.integratorproject.data.remotesource.RemoteSource
+import com.ludmilla.integratorproject.data.response.GenreResp
+import com.ludmilla.integratorproject.data.response.ResponseGenre
 import com.ludmilla.integratorproject.data.response.ResponseMovies
+import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class PopularMovies : Fragment() {
 
     lateinit var moviesAdapter: MoviesAdapter
+    lateinit var genreAdapter: GenreAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +44,15 @@ class PopularMovies : Fragment() {
         val rvgenre = view.findViewById<RecyclerView>(R.id.rvGenre)
 
         moviesAdapter = MoviesAdapter(context = view.context)
-        rvmovies.adapter= moviesAdapter
+        rvmovies.adapter = moviesAdapter
+        genreAdapter = GenreAdapter(context = view.context)
+        rvgenre.adapter = genreAdapter
 
         getPopularMovies()
+        getGenre()
     }
+
+
 
 
     fun getPopularMovies() {
@@ -73,4 +82,46 @@ class PopularMovies : Fragment() {
 
         })
     }
+
+     fun getGenre(){
+         val retrofit = Retrofit.Builder()
+             .baseUrl(Constants.BASE_URL.value)
+             .addConverterFactory(GsonConverterFactory.create())
+             .build()
+         val service = retrofit.create(RemoteSource::class.java)
+         val call = service.getAllGenres(Constants.PUBLIC_KEY.value, "pt-br")
+         call.enqueue(object : Callback<ResponseGenre> {
+             override fun onResponse(
+                 call: Call<ResponseGenre>,
+                 response: Response<ResponseGenre>,
+             ) {
+                 if (response != null && response.code() == 200) {
+                     val result = response.body()
+                     response.body()?.genres?.let {
+                         genreAdapter.listgenre.addAll(it)
+                         genreAdapter.notifyDataSetChanged()
+                     }
+                 }
+             }
+
+             override fun onFailure(call: Call<ResponseGenre>, t: Throwable) {
+                 TODO("Not yet implemented")
+             }
+
+         })
+     }
+
+
+    /*  private fun displayGenre(
+          response: Response<ResponseGenre>,
+      ) {
+              val resultgenre = response.body()
+              response.body()?.genres.let {
+                  if (it != null) {
+                      genreAdapter.listgenre.addAll(it)
+                  }
+                  genreAdapter.notifyDataSetChanged()
+              }
+          }*/
+
 }
