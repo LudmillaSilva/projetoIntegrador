@@ -10,9 +10,7 @@ import retrofit2.http.Query
 interface RemoteSource {
 
     @GET("movie/popular")
-    fun getPopularMovies(@Query("api_key")api_key:String,
-                         @Query("language") language:String,
-                         @Query("page") page:Int): Call<ResponseMovies>
+    fun getPopularMovies(): Single<ResponseMovies>
 
     @GET("genre/movie/list")
     fun getAllGenres(@Query("api_key")api_key:String,
