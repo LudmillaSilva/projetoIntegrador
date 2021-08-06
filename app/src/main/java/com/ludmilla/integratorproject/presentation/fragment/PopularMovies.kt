@@ -61,10 +61,12 @@ class PopularMovies : Fragment() {
 
     fun initRequests(){
         movieViewModel.getPopularMovies()
+        movieViewModel.getGenres()
     }
 
     fun initObservers(){
         popularMovies()
+        getAllGenres()
     }
 
     private fun popularMovies() {
@@ -76,7 +78,15 @@ class PopularMovies : Fragment() {
 
         })
     }
+    private fun getAllGenres() {
+        movieViewModel.liveGenreResp.observe(viewLifecycleOwner,{ genreList ->
+            genreList?.let {
+                genreAdapter.listgenre.addAll(it)
+                genreAdapter.notifyDataSetChanged()
+            }
 
+        })
+    }
 
 /*    fun getPopularMovies() {
         val retrofit = Retrofit.Builder()

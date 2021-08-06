@@ -13,8 +13,7 @@ interface RemoteSource {
     fun getPopularMovies(): Single<ResponseMovies>
 
     @GET("genre/movie/list")
-    fun getAllGenres(@Query("api_key")api_key:String,
-                     @Query("language") language:String): Call<ResponseGenre>
+    fun getAllGenres(): Single<ResponseGenre>
 
 
 /*
