@@ -1,4 +1,5 @@
 package com.ludmilla.integratorproject.data.repository
+import android.net.Uri
 import com.ludmilla.integratorproject.data.factory.Network
 import com.ludmilla.integratorproject.data.remotesource.RemoteSource
 import com.ludmilla.integratorproject.data.response.GenreResp
@@ -19,4 +20,10 @@ class MovieRepositoryImpl:MovieRepository {
         return remoteSource.getAllGenres()
             .map { it.genres }
     }
+
+    override fun getSearchMovie(movieSearch:Uri): Single<List<ResponseMovie>> {
+        return remoteSource.getSearchMovie(movieSearch)
+            .map { it.results }
+    }
+
 }

@@ -1,10 +1,12 @@
 package com.ludmilla.integratorproject.presentation.fragment
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -23,6 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URI
 
 class PopularMovies : Fragment() {
 
@@ -55,18 +58,23 @@ class PopularMovies : Fragment() {
 
  //       getPopularMovies()
  //       getGenre()
-        initRequests()
-        initObservers()
+        val movieSearch = "Shrek"
+        val movieToURI = movieSearch.toUri()
+        initRequests(movieToURI)
+        initObservers(movieToURI)
+
     }
 
-    fun initRequests(){
+    fun initRequests(movieSearch: Uri){
         movieViewModel.getPopularMovies()
         movieViewModel.getGenres()
+        movieViewModel.getSearch(movieSearch)
     }
 
-    fun initObservers(){
+    fun initObservers(movieSearch: Uri){
         popularMovies()
         getAllGenres()
+        movieViewModel.getSearch(movieSearch)
     }
 
     private fun popularMovies() {

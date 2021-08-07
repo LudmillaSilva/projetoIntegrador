@@ -1,5 +1,6 @@
 package com.ludmilla.integratorproject.data.remotesource
 
+import android.net.Uri
 import com.ludmilla.integratorproject.data.response.*
 import io.reactivex.Single
 import retrofit2.Call
@@ -14,6 +15,9 @@ interface RemoteSource {
 
     @GET("genre/movie/list")
     fun getAllGenres(): Single<ResponseGenre>
+
+    @GET("search/movie")
+    fun getSearchMovie(@Query("query") movieSearch: Uri): Single<ResponseMovies>
 
 
 /*

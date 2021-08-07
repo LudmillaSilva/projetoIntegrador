@@ -2,6 +2,7 @@ package com.ludmilla.integratorproject.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.EditText
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var viewpager: ViewPager2
     lateinit var tablayout: TabLayout
+    lateinit var searchMovie: EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,8 @@ class MainActivity : AppCompatActivity() {
 
         viewpager= findViewById(R.id.viewPager)
         tablayout= findViewById(R.id.tabLayout)
+        searchMovie= findViewById(R.id.searchMovie)
+        val movieSearch = searchMovie.text.toString()
 
         viewpager.adapter = adapter(this)
         TabLayoutMediator(tablayout, viewpager){ tab, position ->

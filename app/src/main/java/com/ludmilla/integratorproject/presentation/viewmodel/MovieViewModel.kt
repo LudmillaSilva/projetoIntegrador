@@ -1,5 +1,6 @@
 package com.ludmilla.integratorproject.presentation.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ludmilla.integratorproject.data.factory.Network
@@ -15,6 +16,7 @@ class MovieViewModel: ViewModel() {
     private val disposable = CompositeDisposable()
     val liveResponseMovie: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
     val liveGenreResp: MutableLiveData<List<GenreResp>> = MutableLiveData<List<GenreResp>>()
+    val liveResponseSearch: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
 
     fun getPopularMovies(){
         movieRepository.getPopularMovies()
@@ -32,6 +34,16 @@ class MovieViewModel: ViewModel() {
             .compose(Network.applySingleTransformer())
             .subscribe({
                 liveGenreResp.value = it
+            },{
+                print(it.message)
+            }).addToDispose()
+    }
+
+    fun getSearch(movieSearch: Uri){
+        movieRepository.getSearchMovie(movieSearch)
+            .compose(Network.applySingleTransformer())
+            .subscribe({
+                liveResponseSearch.value = it
             },{
                 print(it.message)
             }).addToDispose()
