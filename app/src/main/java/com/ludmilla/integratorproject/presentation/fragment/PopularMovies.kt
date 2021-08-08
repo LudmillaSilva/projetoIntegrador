@@ -60,21 +60,25 @@ class PopularMovies : Fragment() {
  //       getGenre()
         val movieSearch = "Shrek"
         val movieToURI = movieSearch.toUri()
-        initRequests(movieToURI)
-        initObservers(movieToURI)
+        val idGenre = "Animação"
+        val idGenreToString = idGenre.toString()
+        initRequests(movieToURI, idGenreToString)
+        initObservers(movieToURI, idGenreToString)
 
     }
 
-    fun initRequests(movieSearch: Uri){
+    fun initRequests(movieSearch: Uri, genreId:String){
         movieViewModel.getPopularMovies()
         movieViewModel.getGenres()
         movieViewModel.getSearch(movieSearch)
+        movieViewModel.getMovieByGenre(genreId)
     }
 
-    fun initObservers(movieSearch: Uri){
+    fun initObservers(movieSearch: Uri, genreId:String){
         popularMovies()
         getAllGenres()
         movieViewModel.getSearch(movieSearch)
+        movieViewModel.getMovieByGenre(genreId)
     }
 
     private fun popularMovies() {

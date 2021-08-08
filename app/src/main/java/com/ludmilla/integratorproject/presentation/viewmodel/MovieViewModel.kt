@@ -16,7 +16,8 @@ class MovieViewModel: ViewModel() {
     private val disposable = CompositeDisposable()
     val liveResponseMovie: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
     val liveGenreResp: MutableLiveData<List<GenreResp>> = MutableLiveData<List<GenreResp>>()
-    val liveResponseSearch: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
+    private val liveResponseSearch: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
+    val liveResponseGenreByMovie: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
 
     fun getPopularMovies(){
         movieRepository.getPopularMovies()
@@ -48,7 +49,15 @@ class MovieViewModel: ViewModel() {
                 print(it.message)
             }).addToDispose()
     }
-
+    fun getMovieByGenre(genreId: String){
+        movieRepository.getGenreByMovie(genreId)
+            .compose(Network.applySingleTransformer())
+            .subscribe({
+                liveResponseGenreByMovie.value = it
+            },{
+                print(it.message)
+            }).addToDispose()
+    }
     private fun Disposable.addToDispose(): Disposable = apply { disposable.add(this) }
 
     override fun onCleared() {

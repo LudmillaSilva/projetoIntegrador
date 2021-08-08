@@ -19,6 +19,9 @@ interface RemoteSource {
     @GET("search/movie")
     fun getSearchMovie(@Query("query") movieSearch: Uri): Single<ResponseMovies>
 
+    @GET("discover/movie")
+    fun getMoviesByGenre(@Query("with_genres", encoded = true) genreId: String): Single<ResponseMovies>
+
 
 /*
     @GET("movie/popular")
@@ -37,7 +40,5 @@ interface RemoteSource {
     @GET("movie/{movie_id}/release_dates")
     fun getCertification(@Path("movie_id") movieId: Int): Single<ResponseCertification>
 
-    @GET("discover/movie")
-    fun getMoviesByGenre(@Query("with_genres", encoded = true) genresId: String): Single<ResponseMovies>
-*/
+    */
 }
