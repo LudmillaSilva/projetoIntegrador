@@ -10,10 +10,12 @@ import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.data.response.GenreResp
 import com.ludmilla.integratorproject.data.response.ResponseGenre
 import com.ludmilla.integratorproject.domain.Genre
+import com.ludmilla.integratorproject.presentation.fragment.ListenerMovies
 
 class GenreAdapter (
     val context: Context,
-    var listgenre: MutableList<GenreResp> = mutableListOf()
+    var listgenre: MutableList<GenreResp> = mutableListOf(),
+    private val listener: ListenerMovies? = null
     ): RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
 
     private val items: MutableList<Int> = mutableListOf()
@@ -28,7 +30,7 @@ class GenreAdapter (
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: GenreAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemgenre?.text = listgenre[position].genreName
         holder.itemgenre?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -36,6 +38,7 @@ class GenreAdapter (
             } else {
                 items.remove(listgenre[position].id)
             }
+            listener?.loadMoviesWithGenre(items)
         }
     }
     override fun getItemCount() = listgenre.size

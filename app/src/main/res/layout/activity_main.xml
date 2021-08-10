@@ -12,7 +12,7 @@
         android:background="@color/backgroundproject"
         tools:context=".presentation.MainActivity">
 
-        <ImageButton
+        <!--<ImageButton
             android:id="@+id/submitSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,6 +21,17 @@
             android:backgroundTint="@color/backgroundproject"
             android:contentDescription="@string/search_button_description"
             android:src="@drawable/ic_baseline_search_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <SearchView
+            android:id="@+id/searchMovie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:paddingHorizontal="@dimen/small"
+            android:backgroundTint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,8 +60,8 @@
             app:layout_constraintStart_toEndOf="@+id/submitSearch"
             app:layout_constraintTop_toTopOf="@+id/submitSearch" />>-->
 
-        <EditText
-            android:id="@+id/searchMovie"
+        <!--<EditText
+            android:id="@+id/searchMovie2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/xsmall"
@@ -62,7 +73,7 @@
             android:textSize="@dimen/small_sp"
             app:layout_constraintBottom_toBottomOf="@+id/submitSearch"
             app:layout_constraintStart_toEndOf="@+id/submitSearch"
-            app:layout_constraintTop_toTopOf="@+id/submitSearch" />
+            app:layout_constraintTop_toTopOf="@+id/submitSearch" />-->
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
@@ -86,8 +97,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/submitSearch"
-            app:layout_constraintTop_toBottomOf="@+id/submitSearch" />
+            app:layout_constraintStart_toStartOf="@+id/searchMovie"
+            app:layout_constraintTop_toBottomOf="@+id/searchMovie" />
 
         <TextView
             android:id="@+id/searchModeTxt"
@@ -109,30 +120,31 @@
             android:text="@string/return_to_home"
             android:textColor="@color/greenfilter"
             android:textSize="@dimen/small_sp"
-            android:visibility="gone"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/searchModeTxt"
             app:layout_constraintTop_toBottomOf="@+id/searchModeTxt" />
 
-        <FrameLayout
+        <!--<FrameLayout
             android:id="@+id/searchFragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/backToHomeBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
-
+-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvGenresHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium"
-            android:visibility="invisible"
             android:clipToPadding="false"
             android:orientation="horizontal"
+            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/viewPager"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backToHomeBtn"
+            app:layout_constraintTop_toBottomOf="@+id/searchMovie"
             tools:listitem="@layout/item_genre" />
 
         <ProgressBar
@@ -152,6 +164,7 @@
             android:orientation="horizontal"
             android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvGenresHome"

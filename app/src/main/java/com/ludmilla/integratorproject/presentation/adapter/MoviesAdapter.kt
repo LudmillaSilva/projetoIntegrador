@@ -14,10 +14,12 @@ import com.ludmilla.integratorproject.data.factory.Constants
 import com.ludmilla.integratorproject.data.response.ResponseMovie
 import com.ludmilla.integratorproject.domain.Movie
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter.*
+import com.ludmilla.integratorproject.presentation.fragment.ListenerMovies
 
 class MoviesAdapter (
     val context: Context,
-    var listmovie: MutableList<ResponseMovie> = mutableListOf()
+    var listmovie: MutableList<ResponseMovie> = mutableListOf(),
+    private val listener: ListenerMovies? = null
 ): RecyclerView.Adapter<ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

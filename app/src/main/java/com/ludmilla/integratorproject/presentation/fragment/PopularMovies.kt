@@ -20,6 +20,7 @@ import com.ludmilla.integratorproject.data.response.ResponseMovies
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
+import kotlinx.android.synthetic.main.fragment_movies.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,14 +28,19 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.URI
 
-class PopularMovies : Fragment() {
+class PopularMovies : Fragment(), ListenerMovies {
+
 
     lateinit var moviesAdapter: MoviesAdapter
     lateinit var genreAdapter: GenreAdapter
     private lateinit var movieViewModel: MovieViewModel
+    private var movieSearched: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            movieSearched = it.getString(ARG_PARAM)
+        }
     }
 
     override fun onCreateView(
@@ -51,34 +57,60 @@ class PopularMovies : Fragment() {
         val rvmovies = view.findViewById<RecyclerView>(R.id.rvMovies)
         val rvgenre = view.findViewById<RecyclerView>(R.id.rvGenre)
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
-        moviesAdapter = MoviesAdapter(context = view.context)
+        moviesAdapter = MoviesAdapter(context = view.context, listener = this)
         rvmovies.adapter = moviesAdapter
-        genreAdapter = GenreAdapter(context = view.context)
+        genreAdapter = GenreAdapter(context = view.context, listener = this)
         rvgenre.adapter = genreAdapter
 
  //       getPopularMovies()
  //       getGenre()
-        val movieSearch = "Shrek"
-        val movieToURI = movieSearch.toUri()
+ /*       val movieSearch = "Shrek"
+        val movieToURI = movieSearch.toUri()*/
+        val movieUri = movieSearched?.toUri()
+        if(movieUri!=null){
+            searchMovie(movieUri)
+        }
         val idGenre = "Animação"
         val idGenreToString = idGenre.toString()
-        initRequests(movieToURI, idGenreToString)
-        initObservers(movieToURI, idGenreToString)
+        initRequests(idGenreToString)
+        initObservers(idGenreToString)
 
     }
 
-    fun initRequests(movieSearch: Uri, genreId:String){
+    fun initRequests(genreId:String){
         movieViewModel.getPopularMovies()
         movieViewModel.getGenres()
-        movieViewModel.getSearch(movieSearch)
+//        movieViewModel.getSearch(movieSearch)
         movieViewModel.getMovieByGenre(genreId)
     }
 
-    fun initObservers(movieSearch: Uri, genreId:String){
+    fun initObservers(genreId:String){
         popularMovies()
         getAllGenres()
-        movieViewModel.getSearch(movieSearch)
+ //       movieViewModel.getSearch(movieSearch)
+        searchObserver()
         movieViewModel.getMovieByGenre(genreId)
+    }
+
+    fun searchMovie(query:Uri?){
+        query?.let {
+            if(query?.toString().isNotBlank()){
+                movieViewModel.getSearch(it)
+            }else if (query?.toString().isBlank()){
+                movieViewModel.getPopularMovies()
+            }
+        }
+    }
+
+    private fun searchObserver(){
+        movieViewModel.liveResponseSearch.observe(viewLifecycleOwner,{ movieSearched ->
+            movieSearched?.let{
+                rvMovies.visibility = View.VISIBLE
+                moviesAdapter.listmovie.clear()
+                moviesAdapter.listmovie.addAll(it)
+                moviesAdapter.notifyDataSetChanged()
+            }
+        })
     }
 
     private fun popularMovies() {
@@ -100,74 +132,23 @@ class PopularMovies : Fragment() {
         })
     }
 
-/*    fun getPopularMovies() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL.value)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val service = retrofit.create(RemoteSource::class.java)
-        val call = service.getPopularMovies(Constants.PUBLIC_KEY.value, "pt-br", 1)
-        call.enqueue(object : Callback<ResponseMovies> {
-            override fun onResponse(
-                call: Call<ResponseMovies>,
-                response: Response<ResponseMovies>,
-            ) {
-                if (response != null && response.code() == 200) {
-                    val result = response.body()
-                    response.body()?.results?.let {
-                        moviesAdapter.listmovie.addAll(it)
-                        moviesAdapter.notifyDataSetChanged()
-                    }
+    override fun loadMoviesWithGenre(genreId: List<Int>) {
+        movieViewModel.getMovieByGenre(genreId.joinToString(","))
+    }
+
+    companion object{
+        private const val ARG_PARAM = "searched"
+
+        @JvmStatic
+        fun newInstance(movieSearched: String) =
+            PopularMovies().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM, movieSearched)
                 }
             }
-
-            override fun onFailure(call: Call<ResponseMovies>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }*/
-
-    /*  private fun displayGenre(
-          response: Response<ResponseGenre>,
-      ) {
-              val resultgenre = response.body()
-              response.body()?.genres.let {
-                  if (it != null) {
-                      genreAdapter.listgenre.addAll(it)
-                  }
-                  genreAdapter.notifyDataSetChanged()
-              }
-          }*/
-
+    }
 
 }
 
 
-/*fun getGenre(){
-    val retrofit = Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL.value)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    val service = retrofit.create(RemoteSource::class.java)
-    val call = service.getAllGenres(Constants.PUBLIC_KEY.value, "pt-br")
-    call.enqueue(object : Callback<ResponseGenre> {
-        override fun onResponse(
-            call: Call<ResponseGenre>,
-            response: Response<ResponseGenre>,
-        ) {
-            if (response != null && response.code() == 200) {
-                val result = response.body()
-                response.body()?.genres?.let {
-                    genreAdapter.listgenre.addAll(it)
-                    genreAdapter.notifyDataSetChanged()
-                }
-            }
-        }
 
-        override fun onFailure(call: Call<ResponseGenre>, t: Throwable) {
-            TODO("Not yet implemented")
-        }
-
-    })
-}*/

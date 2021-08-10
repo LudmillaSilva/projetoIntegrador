@@ -25,9 +25,11 @@ class MovieRepositoryImpl:MovieRepository {
         return remoteSource.getSearchMovie(movieSearch)
             .map { it.results }
     }
-    override fun getGenreByMovie(genreId:String): Single<List<ResponseMovie>> {
+
+    override fun getMoviesByGenre(genreId: String): Single<List<ResponseMovie>> {
         return remoteSource.getMoviesByGenre(genreId)
             .map { it.results }
     }
+
 
 }
