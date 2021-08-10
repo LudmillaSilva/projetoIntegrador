@@ -7,26 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.RecyclerView
 import com.ludmilla.integratorproject.R
-import com.ludmilla.integratorproject.data.factory.Constants
-import com.ludmilla.integratorproject.data.remotesource.RemoteSource
-import com.ludmilla.integratorproject.data.response.GenreResp
-import com.ludmilla.integratorproject.data.response.ResponseGenre
-import com.ludmilla.integratorproject.data.response.ResponseMovies
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 import kotlinx.android.synthetic.main.fragment_movies.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.net.URI
 
 class PopularMovies : Fragment(), ListenerMovies {
 
@@ -88,6 +75,7 @@ class PopularMovies : Fragment(), ListenerMovies {
         popularMovies()
         getAllGenres()
  //       movieViewModel.getSearch(movieSearch)
+        movieByGenreObserver()
         searchObserver()
         movieViewModel.getMovieByGenre(genreId)
     }
@@ -105,6 +93,17 @@ class PopularMovies : Fragment(), ListenerMovies {
     private fun searchObserver(){
         movieViewModel.liveResponseSearch.observe(viewLifecycleOwner,{ movieSearched ->
             movieSearched?.let{
+                rvMovies.visibility = View.VISIBLE
+                moviesAdapter.listmovie.clear()
+                moviesAdapter.listmovie.addAll(it)
+                moviesAdapter.notifyDataSetChanged()
+            }
+        })
+    }
+
+    private fun movieByGenreObserver(){
+        movieViewModel.liveResponseMovieByGenre.observe(viewLifecycleOwner,{ movieByGenre ->
+            movieByGenre?.let{
                 rvMovies.visibility = View.VISIBLE
                 moviesAdapter.listmovie.clear()
                 moviesAdapter.listmovie.addAll(it)

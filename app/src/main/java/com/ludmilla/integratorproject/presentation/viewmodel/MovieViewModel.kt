@@ -7,7 +7,6 @@ import com.ludmilla.integratorproject.data.factory.Network
 import com.ludmilla.integratorproject.data.repository.MovieRepositoryImpl
 import com.ludmilla.integratorproject.data.response.GenreResp
 import com.ludmilla.integratorproject.data.response.ResponseMovie
-import com.ludmilla.integratorproject.domain.Genre
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -18,7 +17,7 @@ class MovieViewModel: ViewModel() {
     val liveResponseMovie: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
     val liveGenreResp: MutableLiveData<List<GenreResp>> = MutableLiveData<List<GenreResp>>()
     val liveResponseSearch: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
-    val liveResponseGenreByMovie: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
+    val liveResponseMovieByGenre: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
 
     fun getPopularMovies(){
         movieRepository.getPopularMovies()
@@ -55,7 +54,7 @@ class MovieViewModel: ViewModel() {
         movieRepository.getMoviesByGenre(genreId)
             .compose(Network.applySingleTransformer())
             .subscribe({
-                liveResponseGenreByMovie.value = it
+                liveResponseMovieByGenre.value = it
             },{
                 print(it.message)
             }).addToDispose()

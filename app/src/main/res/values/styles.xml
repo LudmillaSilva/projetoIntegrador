@@ -12,6 +12,10 @@
         <item name="android:textColor">@color/notfoundinfo</item>
     </style>
 
+    <style name="CustomChipColors" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_background</item>
+        <item name="android:textColor">@color/chip_font_color</item>
+    </style>
 
 
     <style name="CustomCardCorners2" parent="@style/Widget.MaterialComponents.CardView">
