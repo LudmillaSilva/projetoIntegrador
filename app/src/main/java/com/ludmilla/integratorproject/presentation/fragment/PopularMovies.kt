@@ -14,13 +14,14 @@ import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 import kotlinx.android.synthetic.main.fragment_movies.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PopularMovies : Fragment(), ListenerMovies {
 
 
     lateinit var moviesAdapter: MoviesAdapter
     lateinit var genreAdapter: GenreAdapter
-    private lateinit var movieViewModel: MovieViewModel
+    private val movieViewModel: MovieViewModel by viewModel()
     private var movieSearched: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +44,7 @@ class PopularMovies : Fragment(), ListenerMovies {
 
         val rvmovies = view.findViewById<RecyclerView>(R.id.rvMovies)
         val rvgenre = view.findViewById<RecyclerView>(R.id.rvGenre)
-        movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
+//        movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         moviesAdapter = MoviesAdapter(context = view.context, listener = this)
         rvmovies.adapter = moviesAdapter
         genreAdapter = GenreAdapter(context = view.context, listener = this)
