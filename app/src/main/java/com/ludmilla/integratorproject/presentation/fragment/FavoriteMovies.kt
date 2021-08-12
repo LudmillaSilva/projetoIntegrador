@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.ludmilla.integratorproject.R
+import com.ludmilla.integratorproject.domain.Movie
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
@@ -32,7 +33,7 @@ class FavoriteMovies : Fragment(), ListenerMovies{
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_movies, container, false)
+        return inflater.inflate(R.layout.fragment_movies, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,14 +49,26 @@ class FavoriteMovies : Fragment(), ListenerMovies{
 
        viewModelFavorites.getGenres()
        observeGenres()
+
 //       viewModelFavorites.getFavoriteMovies()
 
     }
 
     private fun observeGenres(){
-        viewModelFavorites.liveGenreResp.observe(viewLifecycleOwner, {
+        viewModelFavorites.liveGenreResp.observe(viewLifecycleOwner, { resultObserveGenres ->
+            resultObserveGenres?.let{
+                genreAdapter.listgenre.addAll(it)
+                genreAdapter.notifyDataSetChanged()
+            }
 
         })
+    }
+
+    fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
+        if (!isChecked) {
+            movie.isFavorite = false
+
+        }
     }
 
     override fun loadMoviesWithGenre(genreIds: List<Int>) {
