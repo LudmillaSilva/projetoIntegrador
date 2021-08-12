@@ -86,9 +86,9 @@
             app:layout_constraintTop_toBottomOf="@+id/searchMovie"
             app:tabIndicatorColor="@color/greenfilter"
             app:tabIndicatorFullWidth="false"
-            app:tabSelectedTextColor="@color/filmtitlecolor"
+            app:tabSelectedTextColor="@color/black"
             app:tabTextAppearance="@style/Widget.Design.TabLayout"
-            app:tabTextColor="#2A12153D" />
+            app:tabTextColor="@color/black" />
 
 
         <ImageView

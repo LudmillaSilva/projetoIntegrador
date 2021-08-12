@@ -7,6 +7,7 @@ import com.ludmilla.integratorproject.data.factory.Network
 import com.ludmilla.integratorproject.data.repository.MovieRepositoryImpl
 import com.ludmilla.integratorproject.data.response.GenreResp
 import com.ludmilla.integratorproject.data.response.ResponseMovie
+import com.ludmilla.integratorproject.domain.Movie
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -59,6 +60,11 @@ class MovieViewModel: ViewModel() {
                 print(it.message)
             }).addToDispose()
     }
+
+   // fun getFavoriteMovie(movie: Movie){
+    //    movieRepository.
+
+ //   }
 
 
     private fun Disposable.addToDispose(): Disposable = apply { disposable.add(this) }

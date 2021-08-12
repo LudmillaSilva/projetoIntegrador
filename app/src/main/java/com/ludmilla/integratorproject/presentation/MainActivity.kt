@@ -41,12 +41,14 @@ class MainActivity : AppCompatActivity() {
 //        val movieSearch = searchMovie.text.toString()
 
         viewpager.adapter = adapter(this)
+        viewpager.isUserInputEnabled = false
         TabLayoutMediator(tablayout, viewpager){ tab, position ->
             tab.text = tabTitle(position)
         }.attach()
         addActions()
 
     }
+
 
     private fun addActions(){
         searchMovie.setOnQueryTextListener(object: SearchView.OnQueryTextListener{

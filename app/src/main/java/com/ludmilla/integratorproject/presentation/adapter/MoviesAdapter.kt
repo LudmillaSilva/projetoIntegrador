@@ -19,7 +19,7 @@ import com.ludmilla.integratorproject.presentation.fragment.ListenerMovies
 class MoviesAdapter (
     val context: Context,
     var listmovie: MutableList<ResponseMovie> = mutableListOf(),
-    private val listener: ListenerMovies? = null
+    val listener: ListenerMovies? = null
 ): RecyclerView.Adapter<ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
