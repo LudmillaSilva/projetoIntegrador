@@ -16,6 +16,7 @@ import com.ludmilla.integratorproject.data.response.ResponseMovies
 import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.presentation.adapter.adapter
 import com.ludmilla.integratorproject.presentation.fragment.PopularMovies
+import com.ludmilla.integratorproject.presentation.viewmodel.FavoritesViewModel
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val movieViewModel: MovieViewModel by viewModel()
+        val favoriteViewModel: FavoritesViewModel by viewModel()
 
         viewpager= findViewById(R.id.viewPager)
         tablayout= findViewById(R.id.tabLayout)

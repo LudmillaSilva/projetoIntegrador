@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "table_favorites")
 data class Favorite (
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
 
     @ColumnInfo(name = "img")
@@ -17,4 +17,7 @@ data class Favorite (
 
     @ColumnInfo(name = "average")
     val average: String? = null,
+
+    @ColumnInfo(name = "genreIds")
+    val genreIds: String? = null
 )

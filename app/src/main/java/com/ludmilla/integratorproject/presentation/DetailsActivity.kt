@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.ludmilla.integratorproject.R
+import com.ludmilla.integratorproject.presentation.adapter.CastAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 
 class DetailsActivity : AppCompatActivity() {
@@ -24,10 +25,8 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var genresrvinfo: RecyclerView
     private lateinit var txtviewmoviesynopsis: TextView
     private lateinit var castrv: RecyclerView
-/*
-    private lateinit var castRvAdapter: CastRvAdapter
-    private lateinit var genresRvAdapter: MovieDetailsGenresRvAdapter
-*/
+    private lateinit var castAdapter: CastAdapter
+//    private lateinit var genresRvAdapter: MovieDetailsGenresRvAdapter
     private val viewModel = MovieViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

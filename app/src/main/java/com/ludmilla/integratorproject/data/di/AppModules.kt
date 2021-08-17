@@ -2,6 +2,7 @@ package com.ludmilla.integratorproject.data.di
 
 import com.ludmilla.integratorproject.data.database.FavoriteDatabase
 import com.ludmilla.integratorproject.data.repository.FavoriteRepositoryImpl
+import com.ludmilla.integratorproject.presentation.viewmodel.FavoritesViewModel
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -10,6 +11,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { MovieViewModel() }
+    viewModel {FavoritesViewModel(get())}
 }
 
 val repositoryModule = module {

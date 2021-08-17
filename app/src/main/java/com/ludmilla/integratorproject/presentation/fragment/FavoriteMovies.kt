@@ -11,8 +11,10 @@ import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.domain.Movie
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
+import com.ludmilla.integratorproject.presentation.viewmodel.FavoritesViewModel
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 import kotlinx.android.synthetic.main.fragment_movies.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FavoriteMovies : Fragment(), ListenerMovies{
 
@@ -20,7 +22,7 @@ class FavoriteMovies : Fragment(), ListenerMovies{
     private lateinit var genreAdapter: GenreAdapter
     private lateinit var rvGenre: RecyclerView
     private lateinit var rvMovies: RecyclerView
-    private lateinit var viewModelFavorites: MovieViewModel
+    val viewModelFavorites: FavoritesViewModel by sharedViewModel()
     val listener: ListenerMovies? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,20 +43,20 @@ class FavoriteMovies : Fragment(), ListenerMovies{
 
        rvGenre = view.findViewById(R.id.rvGenre)
        rvMovies = view.findViewById(R.id.rvMovies)
-       viewModelFavorites = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
+ //      viewModelFavorites = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
        genreAdapter = GenreAdapter(context = view.context, listener = this)
        moviesAdapter = MoviesAdapter(context = view.context, listener = this)
        rvGenre.adapter = genreAdapter
        rvMovies.adapter = moviesAdapter
 
-       viewModelFavorites.getGenres()
-       observeGenres()
+//       viewModelFavorites.getGenres()
+//       observeGenres()
 
 //       viewModelFavorites.getFavoriteMovies()
 
     }
 
-    private fun observeGenres(){
+    /*private fun observeGenres(){
         viewModelFavorites.liveGenreResp.observe(viewLifecycleOwner, { resultObserveGenres ->
             resultObserveGenres?.let{
                 genreAdapter.listgenre.addAll(it)
@@ -62,7 +64,7 @@ class FavoriteMovies : Fragment(), ListenerMovies{
             }
 
         })
-    }
+    }*/
 
     fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
         if (!isChecked) {

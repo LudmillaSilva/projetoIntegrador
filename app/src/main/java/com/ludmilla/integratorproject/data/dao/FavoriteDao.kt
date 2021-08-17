@@ -16,5 +16,8 @@ interface FavoriteDao {
     @Query("SELECT * from table_favorites")
     fun getAll(): LiveData<List<Favorite>>
 
+    @Query("SELECT * from table_favorites where genreIds= :genreIds")
+    fun getAllByGenre(genreIds: String) :LiveData<List<Favorite>>
+
 
 }
