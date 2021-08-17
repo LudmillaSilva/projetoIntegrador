@@ -42,11 +42,11 @@ class MoviesAdapter (
         holder.titleMovie?.text = listmovie[position].title
        // holder.rateMovie?.text = dataset[position].rating
 
-        /*holder.imgMovie?.setOnClickListener {
-            listener?.openMovieDetails(dataset[position].id)
+        holder.imageMovie?.setOnClickListener {
+            listener?.getDetailMovie(listmovie[position].id)
         }
 
-        holder.favBtn?.isChecked = dataset[position].isFavorite
+  /*      holder.favBtn?.isChecked = dataset[position].isFavorite
         holder.favBtn?.setOnClickListener {
             listener?.onFavoriteClickedListener(dataset[position], !dataset[position].isFavorite)
         }*/

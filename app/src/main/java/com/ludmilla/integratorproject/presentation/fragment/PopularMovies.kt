@@ -1,5 +1,6 @@
 package com.ludmilla.integratorproject.presentation.fragment
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,10 +11,12 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.ludmilla.integratorproject.R
+import com.ludmilla.integratorproject.presentation.DetailsActivity
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 import kotlinx.android.synthetic.main.fragment_movies.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PopularMovies : Fragment(), ListenerMovies {
@@ -21,7 +24,7 @@ class PopularMovies : Fragment(), ListenerMovies {
 
     lateinit var moviesAdapter: MoviesAdapter
     lateinit var genreAdapter: GenreAdapter
-    private val movieViewModel: MovieViewModel by viewModel()
+    private val movieViewModel: MovieViewModel by sharedViewModel()
     private var movieSearched: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,6 +137,12 @@ class PopularMovies : Fragment(), ListenerMovies {
 
     override fun loadMoviesWithGenre(genreId: List<Int>) {
         movieViewModel.getMovieByGenre(genreId.joinToString(","))
+    }
+
+    override fun getDetailMovie(movieId: Int) {
+        val detailMovieId = Intent(requireContext(),DetailsActivity::class.java)
+        detailMovieId.putExtra("MOVIE_ID",movieId)
+        startActivity(detailMovieId)
     }
 
     companion object{

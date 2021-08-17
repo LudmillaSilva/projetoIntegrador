@@ -74,4 +74,8 @@ class FavoriteMovies : Fragment(), ListenerMovies{
     override fun loadMoviesWithGenre(genreIds: List<Int>) {
         TODO("Not yet implemented")
     }
+
+    override fun getDetailMovie(movieId: Int) {
+        TODO("Not yet implemented")
+    }
 }

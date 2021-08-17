@@ -22,6 +22,9 @@ interface RemoteSource {
     @GET("discover/movie")
     fun getMoviesByGenre(@Query("with_genres", encoded = true) genreId: String): Single<ResponseMovies>
 
+    @GET("movie/{movie_id}")
+    fun getDetailMovie(@Path("movie_id") movieId: Int): Single<ResponseDetail>
+
 
 /*
     @GET("movie/popular")

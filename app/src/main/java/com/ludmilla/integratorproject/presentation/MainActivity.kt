@@ -16,7 +16,9 @@ import com.ludmilla.integratorproject.data.response.ResponseMovies
 import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.presentation.adapter.adapter
 import com.ludmilla.integratorproject.presentation.fragment.PopularMovies
+import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val movieViewModel: MovieViewModel by viewModel()
 
         viewpager= findViewById(R.id.viewPager)
         tablayout= findViewById(R.id.tabLayout)
