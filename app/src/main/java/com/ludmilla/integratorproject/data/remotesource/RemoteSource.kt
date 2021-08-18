@@ -25,6 +25,9 @@ interface RemoteSource {
     @GET("movie/{movie_id}")
     fun getDetailMovie(@Path("movie_id") movieId: Int): Single<ResponseDetail>
 
+    @GET("movie/{movie_id}/credits")
+    fun getCast(@Path("movie_id") movieId: Int): Single<ResponseCast>
+
 
 /*
     @GET("movie/popular")

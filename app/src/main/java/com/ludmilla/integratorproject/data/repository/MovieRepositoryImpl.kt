@@ -2,10 +2,7 @@ package com.ludmilla.integratorproject.data.repository
 import android.net.Uri
 import com.ludmilla.integratorproject.data.factory.Network
 import com.ludmilla.integratorproject.data.remotesource.RemoteSource
-import com.ludmilla.integratorproject.data.response.GenreResp
-import com.ludmilla.integratorproject.data.response.ResponseDetail
-import com.ludmilla.integratorproject.data.response.ResponseGenre
-import com.ludmilla.integratorproject.data.response.ResponseMovie
+import com.ludmilla.integratorproject.data.response.*
 import io.reactivex.Single
 
 class MovieRepositoryImpl:MovieRepository {
@@ -34,6 +31,11 @@ class MovieRepositoryImpl:MovieRepository {
 
     override fun getDetailMovie(movieId: Int): Single<ResponseDetail> {
         return remoteSource.getDetailMovie(movieId)
+            .map {it}
+    }
+
+    override fun getCast(movieId: Int): Single<ResponseCast> {
+        return remoteSource.getCast(movieId)
             .map {it}
     }
 

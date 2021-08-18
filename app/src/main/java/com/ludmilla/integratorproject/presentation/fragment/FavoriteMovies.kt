@@ -80,4 +80,8 @@ class FavoriteMovies : Fragment(), ListenerMovies{
     override fun getDetailMovie(movieId: Int) {
         TODO("Not yet implemented")
     }
+
+    override fun getCast(movieId: Int) {
+        TODO("Not yet implemented")
+    }
 }

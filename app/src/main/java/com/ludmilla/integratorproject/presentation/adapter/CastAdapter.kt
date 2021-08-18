@@ -10,9 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.data.factory.Constants
+import com.ludmilla.integratorproject.data.response.CastResp
+import com.ludmilla.integratorproject.data.response.ResponseDetail
 import com.ludmilla.integratorproject.domain.CastMovie
+import com.ludmilla.integratorproject.presentation.fragment.ListenerMovies
 
-class CastAdapter (val context: Context, val listCast: MutableList<CastMovie> = mutableListOf()): RecyclerView.Adapter<CastAdapter.ViewHolder>() {
+class CastAdapter (val context: Context,
+   val listCast: MutableList<CastResp> = mutableListOf())
+
+    : RecyclerView.Adapter<CastAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cast, parent, false)

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.presentation.DetailsActivity
+import com.ludmilla.integratorproject.presentation.adapter.CastAdapter
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
@@ -24,6 +25,7 @@ class PopularMovies : Fragment(), ListenerMovies {
 
     lateinit var moviesAdapter: MoviesAdapter
     lateinit var genreAdapter: GenreAdapter
+
     private val movieViewModel: MovieViewModel by sharedViewModel()
     private var movieSearched: String? = null
 
@@ -144,6 +146,15 @@ class PopularMovies : Fragment(), ListenerMovies {
         detailMovieId.putExtra("MOVIE_ID",movieId)
         startActivity(detailMovieId)
     }
+
+    override fun getCast(movieId: Int) {
+        val castMovieId = Intent (requireContext(),DetailsActivity::class.java)
+        castMovieId.putExtra("MOVIE_ID", movieId)
+        startActivity(castMovieId)
+
+    }
+
+
 
     companion object{
         private const val ARG_PARAM = "searched"

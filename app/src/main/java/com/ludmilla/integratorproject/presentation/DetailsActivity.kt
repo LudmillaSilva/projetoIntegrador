@@ -2,14 +2,18 @@ package com.ludmilla.integratorproject.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.ludmilla.integratorproject.R
+import com.ludmilla.integratorproject.data.factory.Constants
+import com.ludmilla.integratorproject.data.response.CastResp
+import com.ludmilla.integratorproject.data.response.ResponseDetail
 import com.ludmilla.integratorproject.presentation.adapter.CastAdapter
+import com.ludmilla.integratorproject.presentation.adapter.GenreDetailsAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 
 class DetailsActivity : AppCompatActivity() {
@@ -26,7 +30,7 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var txtviewmoviesynopsis: TextView
     private lateinit var castrv: RecyclerView
     private lateinit var castAdapter: CastAdapter
-//    private lateinit var genresRvAdapter: MovieDetailsGenresRvAdapter
+    private lateinit var genresDetailsAdapter: GenreDetailsAdapter
     private val viewModel = MovieViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,15 +52,54 @@ class DetailsActivity : AppCompatActivity() {
         val movieId = intent.extras?.getInt("MOVIE_ID")
 
         viewModel.getDetailMovie(movieId!!)
+        viewModel.getCast(movieId!!)
+
+        detailMovieObserver()
+        castObserver()
 
 
         returnbtn.setOnClickListener{
             finish()
         }
 
-       /* private fun getMovieDetail(){
-            viewModel.movie
-        }*/
+
+    }
+
+    private fun castObserver(){
+        viewModel.liveResponseCast.observe(this, { cast ->
+            cast?.let{
+                showCast(it)
+                castAdapter.listCast.addAll(it)
+                castAdapter.notifyDataSetChanged()
+            }
+        })
+
+    }
+
+    private fun showCast(cast: List<CastResp>) {
+        castAdapter = CastAdapter(this, cast.toMutableList())
+        castrv.adapter = castAdapter
+
+    }
+
+    private fun detailMovieObserver(){
+        viewModel.liveResponseDetailMovie.observe(this,{ movieDetails ->
+            movieDetails?.let{
+                showMovieDetails(it)
+            }
+        })
+    }
+
+    private fun showMovieDetails(movie: ResponseDetail) {
+        genresDetailsAdapter = GenreDetailsAdapter(movie.genres)
+        genresrvinfo.adapter = genresDetailsAdapter
+        txtviewmoviesynopsis.text = movie.overview
+        movietitle.text = movie.title
+        Glide.with(this).load(Constants.BASE_URL_IMAGE.value + movie.backdrop_path ).into(postermovie)
+        rationmovieinfoact.text = movie.vote_average.toString()
+        movieyear.text = movie.release_date.take(4)
+  //      txtrestriction.text = TODO Buscar informação da API
+ //       movieduration.text = TODO Montar informação de outra forma
 
     }
 
