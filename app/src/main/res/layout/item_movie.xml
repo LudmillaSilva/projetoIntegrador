@@ -40,13 +40,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_heart_border"
+    <ToggleButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="@dimen/large"
+        android:layout_height="@dimen/medium"
+        android:background="@drawable/heart_btn"
+        android:checked="false"
+        android:contentDescription="@string/heart_icon_description"
+        android:text=""
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
-        app:layout_constraintTop_toTopOf="@+id/txtTitle"
-        tools:layout_editor_absoluteX="256dp" />
+        app:layout_constraintStart_toEndOf="@+id/txtTitle"
+        app:layout_constraintTop_toTopOf="@+id/txtTitle" />
 
     <ImageView
         android:id="@+id/imageView"

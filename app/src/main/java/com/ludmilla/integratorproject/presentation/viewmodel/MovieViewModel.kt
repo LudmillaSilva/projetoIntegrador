@@ -3,17 +3,22 @@ package com.ludmilla.integratorproject.presentation.viewmodel
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ludmilla.integratorproject.data.dao.FavoriteDao
 import com.ludmilla.integratorproject.data.factory.Network
+import com.ludmilla.integratorproject.data.model.Favorite
 import com.ludmilla.integratorproject.data.repository.MovieRepositoryImpl
 import com.ludmilla.integratorproject.data.response.*
 import com.ludmilla.integratorproject.domain.Movie
 import com.ludmilla.integratorproject.domain.MovieDetail
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.launch
 
-class MovieViewModel: ViewModel() {
+class MovieViewModel(private val movieRepository: MovieRepositoryImpl,
+                     private val favoriteDao: FavoriteDao): ViewModel() {
 
-    private val movieRepository = MovieRepositoryImpl()
+
     private val disposable = CompositeDisposable()
     val liveResponseMovie: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
     val liveGenreResp: MutableLiveData<List<GenreResp>> = MutableLiveData<List<GenreResp>>()
@@ -88,6 +93,17 @@ class MovieViewModel: ViewModel() {
 
  //   }
 
+    fun deleteFavorite(favorite: Favorite){
+        viewModelScope.launch {
+            favoriteDao.remove(favorite)
+        }
+    }
+
+    fun saveFavorite(favorite:Favorite){
+        viewModelScope.launch {
+            favoriteDao.save(favorite)
+        }
+    }
 
     private fun Disposable.addToDispose(): Disposable = apply { disposable.add(this) }
 

@@ -15,6 +15,7 @@ import com.ludmilla.integratorproject.data.response.ResponseDetail
 import com.ludmilla.integratorproject.presentation.adapter.CastAdapter
 import com.ludmilla.integratorproject.presentation.adapter.GenreDetailsAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -31,7 +32,7 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var castrv: RecyclerView
     private lateinit var castAdapter: CastAdapter
     private lateinit var genresDetailsAdapter: GenreDetailsAdapter
-    private val viewModel = MovieViewModel()
+    private val viewModel : MovieViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

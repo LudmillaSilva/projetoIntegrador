@@ -9,7 +9,7 @@ import com.ludmilla.integratorproject.data.model.Favorite
 
 @Database(
     entities = [Favorite::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ludmilla.integratorproject.data.factory.Network
+import com.ludmilla.integratorproject.data.repository.MovieRepository
 import com.ludmilla.integratorproject.data.repository.MovieRepositoryImpl
 import com.ludmilla.integratorproject.data.response.GenreResp
 import com.ludmilla.integratorproject.data.response.ResponseCast
@@ -13,9 +14,9 @@ import com.ludmilla.integratorproject.domain.MovieDetail
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-class DetailsViewModel: ViewModel() {
+class DetailsViewModel(private val movieRepository: MovieRepositoryImpl): ViewModel() {
 
-    private val movieRepository = MovieRepositoryImpl()
+
     private val disposable = CompositeDisposable()
     val liveResponseMovie: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
     val liveGenreResp: MutableLiveData<List<GenreResp>> = MutableLiveData<List<GenreResp>>()

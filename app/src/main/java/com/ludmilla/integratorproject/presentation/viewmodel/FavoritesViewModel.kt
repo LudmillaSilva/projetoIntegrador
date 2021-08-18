@@ -20,4 +20,10 @@ class FavoritesViewModel(private val favoriteRepository: FavoriteRepositoryImpl)
             favoriteRepository.save(favorite)
         }
     }
+
+    fun deleteFavorite(favorite: Favorite){
+        viewModelScope.launch {
+            favoriteRepository.delete(favorite)
+        }
+    }
 }

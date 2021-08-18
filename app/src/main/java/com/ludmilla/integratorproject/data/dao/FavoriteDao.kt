@@ -19,5 +19,8 @@ interface FavoriteDao {
     @Query("SELECT * from table_favorites where genreIds= :genreIds")
     fun getAllByGenre(genreIds: String) :LiveData<List<Favorite>>
 
+    @Query("SELECT EXISTS (SELECT * FROM TABLE_FAVORITES WHERE id =:id)")
+    fun checkIfFavoriteExists(id: Long) : Boolean
+
 
 }

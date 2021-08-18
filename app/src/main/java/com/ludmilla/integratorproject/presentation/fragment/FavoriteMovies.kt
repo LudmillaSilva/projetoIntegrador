@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.ludmilla.integratorproject.R
+import com.ludmilla.integratorproject.data.model.Favorite
+import com.ludmilla.integratorproject.data.response.ResponseMovie
 import com.ludmilla.integratorproject.domain.Movie
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
@@ -49,22 +51,39 @@ class FavoriteMovies : Fragment(), ListenerMovies{
        rvGenre.adapter = genreAdapter
        rvMovies.adapter = moviesAdapter
 
-//       viewModelFavorites.getGenres()
-//       observeGenres()
+       initRequests()
+       initObservers()
 
-//       viewModelFavorites.getFavoriteMovies()
 
     }
 
-    /*private fun observeGenres(){
-        viewModelFavorites.liveGenreResp.observe(viewLifecycleOwner, { resultObserveGenres ->
-            resultObserveGenres?.let{
-                genreAdapter.listgenre.addAll(it)
-                genreAdapter.notifyDataSetChanged()
-            }
 
+    private fun  initRequests(){
+        viewModelFavorites.getAllFavorites()
+    }
+
+    private fun initObservers(){
+        getFavoriteObserver()
+    }
+
+    private fun getFavoriteObserver(){
+        viewModelFavorites.liveResponseMovie.observe(viewLifecycleOwner,{favorite ->
+            favorite?.let {
+                val responseMovies: List<ResponseMovie> = it.map { ResponseMovie(it.id.toInt(),it.img,it.title,it.average,
+                    it.genreIds!!.split(",")
+                        .toList().map {
+                            if(it.isNotBlank()){
+                                it.toInt()
+                            }
+                            0
+                        },true)}
+                moviesAdapter.listmovie.clear()
+                moviesAdapter.listmovie.addAll(responseMovies)
+                moviesAdapter.notifyDataSetChanged()
+            }
         })
-    }*/
+    }
+
 
     fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
         if (!isChecked) {
@@ -83,5 +102,18 @@ class FavoriteMovies : Fragment(), ListenerMovies{
 
     override fun getCast(movieId: Int) {
         TODO("Not yet implemented")
+    }
+
+    override fun handleFavorite(movie: ResponseMovie, isChecked: Boolean) {
+        val favorite = Favorite(movie.id.toLong()
+            ,movie.poster,
+            movie.title,
+            movie.average,
+            movie.genreIds.joinToString(","))
+        if(isChecked){
+            viewModelFavorites.saveFavorite(favorite)
+        }else{
+            viewModelFavorites.deleteFavorite(favorite)
+        }
     }
 }

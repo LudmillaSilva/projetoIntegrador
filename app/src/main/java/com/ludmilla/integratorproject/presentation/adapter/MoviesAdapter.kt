@@ -25,7 +25,7 @@ class MoviesAdapter (
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var imageMovie: ImageView? = view.findViewById(R.id.imgMovie)
         var titleMovie: TextView? = view.findViewById(R.id.txtTitle)
-
+        var favoriteButton: ToggleButton = view.findViewById(R.id.favoriteButton)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -46,10 +46,10 @@ class MoviesAdapter (
             listener?.getDetailMovie(listmovie[position].id)
         }
 
-  /*      holder.favBtn?.isChecked = dataset[position].isFavorite
-        holder.favBtn?.setOnClickListener {
-            listener?.onFavoriteClickedListener(dataset[position], !dataset[position].isFavorite)
-        }*/
+        holder.favoriteButton?.isChecked = listmovie[position].isFavorite
+        holder.favoriteButton?.setOnClickListener {
+            listener?.handleFavorite(listmovie[position], !listmovie[position].isFavorite)
+        }
 
     }
 

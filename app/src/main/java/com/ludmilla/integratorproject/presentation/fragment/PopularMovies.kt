@@ -11,6 +11,8 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.ludmilla.integratorproject.R
+import com.ludmilla.integratorproject.data.model.Favorite
+import com.ludmilla.integratorproject.data.response.ResponseMovie
 import com.ludmilla.integratorproject.presentation.DetailsActivity
 import com.ludmilla.integratorproject.presentation.adapter.CastAdapter
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
@@ -70,6 +72,13 @@ class PopularMovies : Fragment(), ListenerMovies {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        movieViewModel.liveResponseMovie.removeObservers(this)
+        movieViewModel.getPopularMovies()
+        popularMovies()
+    }
+
     fun initRequests(genreId:String){
         movieViewModel.getPopularMovies()
         movieViewModel.getGenres()
@@ -121,6 +130,7 @@ class PopularMovies : Fragment(), ListenerMovies {
     private fun popularMovies() {
         movieViewModel.liveResponseMovie.observe(viewLifecycleOwner,{ movieList ->
             movieList?.let {
+                moviesAdapter.listmovie.clear()
                 moviesAdapter.listmovie.addAll(it)
                 moviesAdapter.notifyDataSetChanged()
             }
@@ -154,6 +164,19 @@ class PopularMovies : Fragment(), ListenerMovies {
 
     }
 
+    override fun handleFavorite(movie: ResponseMovie, isChecked: Boolean) {
+        val favorite = Favorite(movie.id.toLong()
+            ,movie.poster,
+            movie.title,
+            movie.average,
+            movie.genreIds.joinToString(","))
+        if(isChecked){
+            movieViewModel.saveFavorite(favorite)
+        }else{
+            movieViewModel.deleteFavorite(favorite)
+        }
+
+    }
 
 
     companion object{

@@ -15,4 +15,6 @@ data class ResponseMovie(
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
 
+    var isFavorite: Boolean
+
 )
