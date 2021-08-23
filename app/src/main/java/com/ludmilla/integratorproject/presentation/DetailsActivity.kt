@@ -154,7 +154,7 @@ class DetailsActivity : AppCompatActivity() {
         txtviewmoviesynopsis.text = movie.overview
         movietitle.text = movie.title
         Glide.with(this).load(Constants.BASE_URL_IMAGE.value + movie.backdrop_path ).into(postermovie)
-        rationmovieinfoact.text = movie.vote_average.toString()
+        rationmovieinfoact.text = movie.vote_average.times(10).toInt().toString()+"%"
         movieyear.text = movie.release_date.take(4)
   //      txtrestriction.text = TODO Buscar informação da API
  //       movieduration.text = TODO Montar informação de outra forma

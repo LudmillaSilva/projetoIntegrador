@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.SearchView
 import androidx.core.net.toUri
 import androidx.viewpager2.widget.ViewPager2
@@ -52,6 +54,15 @@ class MainActivity : AppCompatActivity() {
             tab.text = tabTitle(position)
         }.attach()
         addActions()
+
+
+        searchMovie.setOnClickListener(){
+            tablayout.visibility = View.GONE
+            viewPager.visibility = View.GONE
+            greenIcon.visibility = View.VISIBLE
+            searchModeTxt.visibility = View.VISIBLE
+
+        }
 
     }
 

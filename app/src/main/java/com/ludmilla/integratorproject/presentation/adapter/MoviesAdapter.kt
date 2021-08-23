@@ -26,6 +26,8 @@ class MoviesAdapter (
         var imageMovie: ImageView? = view.findViewById(R.id.imgMovie)
         var titleMovie: TextView? = view.findViewById(R.id.txtTitle)
         var favoriteButton: ToggleButton = view.findViewById(R.id.favoriteButton)
+        var rateMovie: TextView = view.findViewById(R.id.textView)
+
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -40,7 +42,7 @@ class MoviesAdapter (
             holder.imageMovie?.let { Glide.with(context).load(Constants.BASE_URL_IMAGE.value + listmovie[position].poster).into(it) }
         }
         holder.titleMovie?.text = listmovie[position].title
-       // holder.rateMovie?.text = dataset[position].rating
+        holder.rateMovie?.text = listmovie[position].getAverageInPercent()
 
         holder.imageMovie?.setOnClickListener {
             listener?.getDetailMovie(listmovie[position])

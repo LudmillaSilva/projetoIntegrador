@@ -95,6 +95,7 @@
             android:id="@+id/greenIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/select"
             android:layout_marginTop="@dimen/small"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/searchMovie"
@@ -106,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@string/search_mode"
+            android:text="Modo Pesquisa"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/greenIcon"
             app:layout_constraintTop_toBottomOf="@+id/greenIcon" />
@@ -122,6 +123,7 @@
             android:textSize="@dimen/small_sp"
             android:textStyle="bold"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/greenIcon"
             app:layout_constraintStart_toStartOf="@+id/searchModeTxt"
             app:layout_constraintTop_toBottomOf="@+id/searchModeTxt" />
 

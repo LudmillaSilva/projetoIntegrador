@@ -1,6 +1,7 @@
 package com.ludmilla.integratorproject.data.response
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
 
 data class ResponseMovie(
@@ -17,4 +18,8 @@ data class ResponseMovie(
 
     var isFavorite: Boolean
 
-)
+){
+    fun getAverageInPercent():String{
+        return average!!.toBigDecimal().times(BigDecimal.valueOf(10)).toInt().toString()+"%"
+    }
+}
