@@ -12,7 +12,7 @@ class UnknownErrorActivity :AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_error)
-        tryAgainBtn = findViewById(R.id.txtInformation2)
+        tryAgainBtn = findViewById(R.id.txtTryAgain)
         tryAgainBtn.setOnClickListener { finish() }
 
     }

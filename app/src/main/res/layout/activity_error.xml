@@ -9,23 +9,22 @@
         android:id="@+id/errorImage"
         android:layout_width="230dp"
         android:layout_height="230dp"
-        android:layout_marginTop="116dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtTryAgain"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@drawable/connection_error_foreground" />
+        android:src="@drawable/connection_error_foreground"
+        tools:layout_editor_absoluteY="116dp" />
 
     <TextView
         android:id="@+id/txtError"
         style="@style/movieTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
         android:text="O sistema falhou"
-        android:textColor="@color/colorgenreselected"
+        android:textColor="@color/filmtitlecolor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/txtTryAgain"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/errorImage" />
 
@@ -33,7 +32,6 @@
         android:id="@+id/txtInformation2"
         style="@style/movieNotFoundInfo"
         android:layout_width="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/txtTryAgain"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small"
         android:text="@string/error_info"
@@ -54,6 +52,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/select"
+        android:layout_marginTop="@dimen/small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTryAgain" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
