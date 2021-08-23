@@ -11,6 +11,7 @@ import com.ludmilla.integratorproject.data.repository.MovieRepositoryImpl
 import com.ludmilla.integratorproject.data.response.*
 import com.ludmilla.integratorproject.domain.Movie
 import com.ludmilla.integratorproject.domain.MovieDetail
+import com.ludmilla.integratorproject.presentation.error.ErrorEntity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.launch
@@ -26,14 +27,19 @@ class MovieViewModel(private val movieRepository: MovieRepositoryImpl,
     val liveResponseMovieByGenre: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
     val liveResponseDetailMovie: MutableLiveData<ResponseDetail> = MutableLiveData<ResponseDetail>()
     val liveResponseCast: MutableLiveData<List<CastResp>> = MutableLiveData<List<CastResp>>()
+    var liveExceptionHandler: MutableLiveData<ErrorEntity> = MutableLiveData<ErrorEntity>()
 
     fun getPopularMovies(){
         movieRepository.getPopularMovies()
             .compose(Network.applySingleTransformer())
             .subscribe({
-                liveResponseMovie.value = it
+                if (it.isEmpty()){
+                    liveExceptionHandler.value = ErrorEntity.NotFoundError
+                }else{
+                    liveResponseMovie.value = it
+                }
             },{
-                print(it.message)
+                liveExceptionHandler.value = ErrorEntity.UnknownError
             }).addToDispose()
 
     }
@@ -48,13 +54,17 @@ class MovieViewModel(private val movieRepository: MovieRepositoryImpl,
             }).addToDispose()
     }
 
-    fun getSearch(movieSearch: Uri){
+    fun getSearch(movieSearch: Uri, showNotFound: Boolean){
         movieRepository.getSearchMovie(movieSearch)
             .compose(Network.applySingleTransformer())
             .subscribe({
-                liveResponseSearch.value = it
+                if(it.isEmpty()&&showNotFound){
+                    liveExceptionHandler.value = ErrorEntity.NotFoundError
+                }else{
+                    liveResponseSearch.value = it
+                }
             },{
-                print(it.message)
+                liveExceptionHandler.value = ErrorEntity.UnknownError
             }).addToDispose()
     }
 

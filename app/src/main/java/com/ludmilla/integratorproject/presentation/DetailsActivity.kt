@@ -10,11 +10,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.data.factory.Constants
+import com.ludmilla.integratorproject.data.model.Favorite
 import com.ludmilla.integratorproject.data.response.CastResp
 import com.ludmilla.integratorproject.data.response.ResponseDetail
+import com.ludmilla.integratorproject.domain.Movie
 import com.ludmilla.integratorproject.presentation.adapter.CastAdapter
 import com.ludmilla.integratorproject.presentation.adapter.GenreDetailsAdapter
+import com.ludmilla.integratorproject.presentation.viewmodel.FavoritesViewModel
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsActivity : AppCompatActivity() {
@@ -32,7 +38,9 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var castrv: RecyclerView
     private lateinit var castAdapter: CastAdapter
     private lateinit var genresDetailsAdapter: GenreDetailsAdapter
-    private val viewModel : MovieViewModel by viewModel()
+    private val movieViewModel : MovieViewModel by viewModel()
+    private val favoriteViewModel: FavoritesViewModel by viewModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +58,17 @@ class DetailsActivity : AppCompatActivity() {
         txtviewmoviesynopsis = findViewById(R.id.movieSynopsis)
         castrv = findViewById(R.id.castRv)
 
-        val movieId = intent.extras?.getInt("MOVIE_ID")
+        val movie: Movie? = intent.extras?.getParcelable("MOVIE_ID")
 
-        viewModel.getDetailMovie(movieId!!)
-        viewModel.getCast(movieId!!)
+        movie?.let{
+            initCheckFavorite(it.id)
+            handleFavorite(it)
+            movieViewModel.getDetailMovie(it.id)
+            movieViewModel.getCast(it.id)
+        }
 
+
+        checkFavoriteObserver()
         detailMovieObserver()
         castObserver()
 
@@ -66,8 +80,39 @@ class DetailsActivity : AppCompatActivity() {
 
     }
 
+    fun handleFavorite(movie:Movie){
+        favbutton.setOnClickListener {
+            val favorite = Favorite(
+                movie.id.toLong(),
+                movie.img,
+                movie.title,
+                movie.rating,
+                movie.genreId.joinToString (","))
+            if (favbutton.isChecked){
+                favoriteViewModel.saveFavorite(favorite)
+            }else{
+                favoriteViewModel.deleteFavorite(favorite)
+            }
+        }
+    }
+
+    @DelicateCoroutinesApi
+    private fun initCheckFavorite(id:Int){
+        GlobalScope.launch {
+            favoriteViewModel.checkIfIsFavorite(id)
+        }
+    }
+
+    private fun checkFavoriteObserver(){
+        favoriteViewModel.liveCheckFavorite.observe(this,{ isFavorite ->
+            isFavorite?.let {
+                favbutton.isChecked = it
+            }
+        })
+    }
+
     private fun castObserver(){
-        viewModel.liveResponseCast.observe(this, { cast ->
+        movieViewModel.liveResponseCast.observe(this, { cast ->
             cast?.let{
                 showCast(it)
                 castAdapter.listCast.addAll(it)
@@ -84,7 +129,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun detailMovieObserver(){
-        viewModel.liveResponseDetailMovie.observe(this,{ movieDetails ->
+        movieViewModel.liveResponseDetailMovie.observe(this,{ movieDetails ->
             movieDetails?.let{
                 showMovieDetails(it)
             }

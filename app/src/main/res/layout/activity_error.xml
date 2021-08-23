@@ -9,7 +9,9 @@
         android:id="@+id/errorImage"
         android:layout_width="230dp"
         android:layout_height="230dp"
-        android:layout_marginTop="@dimen/xxxlarge_Sp"
+        android:layout_marginTop="116dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtTryAgain"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,6 +25,7 @@
         android:text="O sistema falhou"
         android:textColor="@color/colorgenreselected"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtTryAgain"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/errorImage" />
 
@@ -30,6 +33,7 @@
         android:id="@+id/txtInformation2"
         style="@style/movieNotFoundInfo"
         android:layout_width="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/txtTryAgain"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small"
         android:text="@string/error_info"

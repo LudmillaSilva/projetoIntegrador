@@ -7,4 +7,5 @@ interface FavoriteRepository {
     fun getAll(): LiveData<List<Favorite>>
     suspend fun save(favorite:Favorite)
     suspend fun delete(favorite: Favorite)
+    suspend fun checkIfIsFavorite(id:Long):LiveData<Boolean>
 }

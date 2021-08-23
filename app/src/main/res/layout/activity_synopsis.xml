@@ -131,14 +131,15 @@
         android:id="@+id/favBtnMovieInfo"
         android:layout_width="@dimen/xlarge"
         android:layout_height="@dimen/large"
-        android:checked="false"
-        android:text=""
-        android:textOn=""
-        android:textOff=""
         android:layout_marginEnd="@dimen/large"
         android:background="@drawable/heart_btn"
+        android:checked="false"
+        android:text=""
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintBottom_toBottomOf="@+id/movieTitle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/movieTitle"
         app:layout_constraintTop_toTopOf="@+id/movieTitle" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -10,6 +10,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.UnknownHostException
 
 object Network {
     fun getService() :Retrofit {
@@ -28,7 +29,11 @@ object Network {
                 .addQueryParameter("language", Constants.DEFAULT_LANGUAGE.value)
                 .build()
 
-            chain.proceed(original.newBuilder().url(url).build())
+            try {
+                chain.proceed(original.newBuilder().url(url).build())
+            }catch (e: UnknownHostException){
+                e.message?.let { error(it) }
+            }
         }
 
         val retrofit = Retrofit.Builder()

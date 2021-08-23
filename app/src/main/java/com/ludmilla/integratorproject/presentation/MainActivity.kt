@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchMovie.clearFocus()
                 query?.let{
-                    createPopularMoviesInstance(it)
+                    createPopularMoviesInstance(it, true)
                 }
                 return false
             }
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 if(newText?.isNotBlank()== true){
                     Handler(Looper.getMainLooper()).postDelayed({
                         newText.let{
-                            createPopularMoviesInstance(it)
+                            createPopularMoviesInstance(it, false)
                         }
                     }, AUTO_SEARCH_TIME)
                 }
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun createPopularMoviesInstance(query: String){
+    private fun createPopularMoviesInstance(query: String, showNotFound: Boolean){
         if(popularmovies == null){
             popularmovies = PopularMovies.newInstance(query)
             popularmovies?.let{
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                     .commit()
             }
         }else{
-            popularmovies?.searchMovie(query.toUri())
+            popularmovies?.searchMovie(query.toUri(), showNotFound)
         }
     }
 

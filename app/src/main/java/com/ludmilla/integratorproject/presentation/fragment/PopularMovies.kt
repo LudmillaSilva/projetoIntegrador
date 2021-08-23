@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.data.model.Favorite
 import com.ludmilla.integratorproject.data.response.ResponseMovie
+import com.ludmilla.integratorproject.domain.Movie
 import com.ludmilla.integratorproject.presentation.DetailsActivity
 import com.ludmilla.integratorproject.presentation.adapter.CastAdapter
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
+import com.ludmilla.integratorproject.presentation.error.ErrorEntity
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 import kotlinx.android.synthetic.main.fragment_movies.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -51,6 +53,7 @@ class PopularMovies : Fragment(), ListenerMovies {
 
         val rvmovies = view.findViewById<RecyclerView>(R.id.rvMovies)
         val rvgenre = view.findViewById<RecyclerView>(R.id.rvGenre)
+        val itemnotfound = view.findViewById<View>(R.id.itemNotFound)
 //        movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         moviesAdapter = MoviesAdapter(context = view.context, listener = this)
         rvmovies.adapter = moviesAdapter
@@ -63,7 +66,7 @@ class PopularMovies : Fragment(), ListenerMovies {
         val movieToURI = movieSearch.toUri()*/
         val movieUri = movieSearched?.toUri()
         if(movieUri!=null){
-            searchMovie(movieUri)
+            searchMovie(movieUri, true)
         }
         val idGenre = "Animação"
         val idGenreToString = idGenre.toString()
@@ -89,16 +92,17 @@ class PopularMovies : Fragment(), ListenerMovies {
     fun initObservers(genreId:String){
         popularMovies()
         getAllGenres()
+        errorHandlerObserver()
  //       movieViewModel.getSearch(movieSearch)
         movieByGenreObserver()
         searchObserver()
         movieViewModel.getMovieByGenre(genreId)
     }
 
-    fun searchMovie(query:Uri?){
+    fun searchMovie(query:Uri?, showNotFound: Boolean){
         query?.let {
             if(query?.toString().isNotBlank()){
-                movieViewModel.getSearch(it)
+                movieViewModel.getSearch(it, showNotFound)
             }else if (query?.toString().isBlank()){
                 movieViewModel.getPopularMovies()
             }
@@ -127,6 +131,20 @@ class PopularMovies : Fragment(), ListenerMovies {
         })
     }
 
+    private fun errorHandlerObserver(){
+        movieViewModel.liveExceptionHandler.observe(viewLifecycleOwner, { handle ->
+            when (handle){
+                ErrorEntity.NotFoundError->{
+                    ErrorEntity.doOnNotFoundError(itemNotFound,rvMovies)
+                }
+                ErrorEntity.UnknownError ->{
+                    ErrorEntity.doOnUnknownError(this,requireContext())
+                    //startActivity(Intent(requireContext(),UnknownErrorActivity::class.java))
+                }
+            }
+        })
+    }
+
     private fun popularMovies() {
         movieViewModel.liveResponseMovie.observe(viewLifecycleOwner,{ movieList ->
             movieList?.let {
@@ -151,9 +169,9 @@ class PopularMovies : Fragment(), ListenerMovies {
         movieViewModel.getMovieByGenre(genreId.joinToString(","))
     }
 
-    override fun getDetailMovie(movieId: Int) {
+    override fun getDetailMovie(movie: ResponseMovie) {
         val detailMovieId = Intent(requireContext(),DetailsActivity::class.java)
-        detailMovieId.putExtra("MOVIE_ID",movieId)
+        detailMovieId.putExtra("MOVIE_ID", Movie.parserToMovie(movie))
         startActivity(detailMovieId)
     }
 

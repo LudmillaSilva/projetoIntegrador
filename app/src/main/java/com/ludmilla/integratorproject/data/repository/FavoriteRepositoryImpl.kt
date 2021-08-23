@@ -18,4 +18,8 @@ class FavoriteRepositoryImpl(private val favoriteDao: FavoriteDao): FavoriteRepo
         favoriteDao.remove(favorite)
     }
 
+    override suspend fun checkIfIsFavorite(id:Long):LiveData<Boolean> {
+        return favoriteDao.checkIfIsFavorite(id)
+    }
+
 }

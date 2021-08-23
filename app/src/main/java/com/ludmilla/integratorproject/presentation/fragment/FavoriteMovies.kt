@@ -96,7 +96,7 @@ class FavoriteMovies : Fragment(), ListenerMovies{
         TODO("Not yet implemented")
     }
 
-    override fun getDetailMovie(movieId: Int) {
+    override fun getDetailMovie(movie: ResponseMovie) {
         TODO("Not yet implemented")
     }
 

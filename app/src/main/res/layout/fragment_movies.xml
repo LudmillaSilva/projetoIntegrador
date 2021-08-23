@@ -31,4 +31,13 @@
         app:layout_constraintTop_toBottomOf="@+id/rvGenre"
         tools:listitem="@layout/item_movie" />
 
+    <include
+        android:id="@+id/itemNotFound"
+        layout="@layout/item_notfound"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/rvGenre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

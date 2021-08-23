@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 
 class FavoritesViewModel(private val favoriteRepository: FavoriteRepositoryImpl) :ViewModel() {
     var liveResponseMovie: LiveData<List<Favorite>> = MutableLiveData()
+    var liveCheckFavorite: LiveData<Boolean> = MutableLiveData();
 
     fun getAllFavorites(){
         liveResponseMovie = favoriteRepository.getAll()
@@ -26,4 +27,10 @@ class FavoritesViewModel(private val favoriteRepository: FavoriteRepositoryImpl)
             favoriteRepository.delete(favorite)
         }
     }
+
+    suspend fun checkIfIsFavorite(id:Int){
+        liveCheckFavorite = favoriteRepository.checkIfIsFavorite(id.toLong())
+    }
+
+
 }

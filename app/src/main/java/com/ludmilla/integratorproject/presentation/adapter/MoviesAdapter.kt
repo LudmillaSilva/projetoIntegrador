@@ -43,7 +43,7 @@ class MoviesAdapter (
        // holder.rateMovie?.text = dataset[position].rating
 
         holder.imageMovie?.setOnClickListener {
-            listener?.getDetailMovie(listmovie[position].id)
+            listener?.getDetailMovie(listmovie[position])
         }
 
         holder.favoriteButton?.isChecked = listmovie[position].isFavorite

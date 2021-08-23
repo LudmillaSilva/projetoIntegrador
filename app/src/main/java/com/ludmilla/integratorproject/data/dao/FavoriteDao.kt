@@ -22,5 +22,8 @@ interface FavoriteDao {
     @Query("SELECT EXISTS (SELECT * FROM TABLE_FAVORITES WHERE id =:id)")
     fun checkIfFavoriteExists(id: Long) : Boolean
 
+    @Query("SELECT EXISTS (SELECT * FROM TABLE_FAVORITES WHERE id =:id)")
+    fun checkIfIsFavorite(id: Long) :LiveData<Boolean>
+
 
 }
