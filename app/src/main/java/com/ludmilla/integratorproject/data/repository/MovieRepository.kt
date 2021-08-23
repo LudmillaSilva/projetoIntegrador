@@ -11,4 +11,5 @@ interface MovieRepository {
     fun getMoviesByGenre(genreId: String): Single<List<ResponseMovie>>
     fun getDetailMovie(movieId: Int): Single<ResponseDetail>
     fun getCast(movieId: Int): Single<ResponseCast>
+    fun getParentalGuide(movieId: Int): Single<ReleaseDateResponse>
 }

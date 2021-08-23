@@ -28,6 +28,9 @@ interface RemoteSource {
     @GET("movie/{movie_id}/credits")
     fun getCast(@Path("movie_id") movieId: Int): Single<ResponseCast>
 
+    @GET("movie/{movie_id}/release_dates")
+    fun getParentalGuide(@Path("movie_id")movieId: Int):Single<ResponseCertification>
+
 
 /*
     @GET("movie/popular")

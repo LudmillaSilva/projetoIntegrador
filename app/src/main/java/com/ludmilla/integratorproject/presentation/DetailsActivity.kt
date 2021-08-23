@@ -16,6 +16,7 @@ import com.ludmilla.integratorproject.data.response.ResponseDetail
 import com.ludmilla.integratorproject.domain.Movie
 import com.ludmilla.integratorproject.presentation.adapter.CastAdapter
 import com.ludmilla.integratorproject.presentation.adapter.GenreDetailsAdapter
+import com.ludmilla.integratorproject.presentation.viewmodel.DetailsViewModel
 import com.ludmilla.integratorproject.presentation.viewmodel.FavoritesViewModel
 import com.ludmilla.integratorproject.presentation.viewmodel.MovieViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -40,6 +41,7 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var genresDetailsAdapter: GenreDetailsAdapter
     private val movieViewModel : MovieViewModel by viewModel()
     private val favoriteViewModel: FavoritesViewModel by viewModel()
+    private val detailsViewModel: DetailsViewModel by viewModel()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,21 +65,25 @@ class DetailsActivity : AppCompatActivity() {
         movie?.let{
             initCheckFavorite(it.id)
             handleFavorite(it)
+            detailsViewModel.getParentalGuide(it.id)
             movieViewModel.getDetailMovie(it.id)
             movieViewModel.getCast(it.id)
         }
 
-
-        checkFavoriteObserver()
-        detailMovieObserver()
-        castObserver()
-
+        initObservers()
 
         returnbtn.setOnClickListener{
             finish()
         }
 
 
+    }
+
+    fun initObservers(){
+        checkFavoriteObserver()
+        detailMovieObserver()
+        castObserver()
+        parentalGuideObserver()
     }
 
     fun handleFavorite(movie:Movie){
@@ -94,6 +100,12 @@ class DetailsActivity : AppCompatActivity() {
                 favoriteViewModel.deleteFavorite(favorite)
             }
         }
+    }
+
+    private fun parentalGuideObserver(){
+        detailsViewModel.liveReleaseDate.observe(this, {pg->
+            "PG-${pg.certification}".also { txtrestriction.text = it }
+        })
     }
 
     @DelicateCoroutinesApi

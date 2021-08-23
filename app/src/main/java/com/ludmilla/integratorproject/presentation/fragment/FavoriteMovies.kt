@@ -1,16 +1,20 @@
 package com.ludmilla.integratorproject.presentation.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.ludmilla.integratorproject.R
 import com.ludmilla.integratorproject.data.model.Favorite
+import com.ludmilla.integratorproject.data.response.GenreResp
 import com.ludmilla.integratorproject.data.response.ResponseMovie
 import com.ludmilla.integratorproject.domain.Movie
+import com.ludmilla.integratorproject.presentation.DetailsActivity
 import com.ludmilla.integratorproject.presentation.adapter.GenreAdapter
 import com.ludmilla.integratorproject.presentation.adapter.MoviesAdapter
 import com.ludmilla.integratorproject.presentation.viewmodel.FavoritesViewModel
@@ -25,6 +29,7 @@ class FavoriteMovies : Fragment(), ListenerMovies{
     private lateinit var rvGenre: RecyclerView
     private lateinit var rvMovies: RecyclerView
     val viewModelFavorites: FavoritesViewModel by sharedViewModel()
+    val movieViewModel: MovieViewModel by sharedViewModel()
     val listener: ListenerMovies? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +42,7 @@ class FavoriteMovies : Fragment(), ListenerMovies{
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies, container, false)
+        return inflater.inflate(R.layout.fragment_favorite_movies, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,10 +65,12 @@ class FavoriteMovies : Fragment(), ListenerMovies{
 
     private fun  initRequests(){
         viewModelFavorites.getAllFavorites()
+        movieViewModel.getGenres()
     }
 
     private fun initObservers(){
         getFavoriteObserver()
+        getAllGenres()
     }
 
     private fun getFavoriteObserver(){
@@ -84,6 +91,16 @@ class FavoriteMovies : Fragment(), ListenerMovies{
         })
     }
 
+    private fun getAllGenres() {
+        movieViewModel.liveGenreResp.observe(viewLifecycleOwner,{ genreListFavorite ->
+            genreListFavorite?.let {
+                genreAdapter.listgenre.addAll(it)
+                genreAdapter.notifyDataSetChanged()
+            }
+
+        })
+    }
+
 
     fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
         if (!isChecked) {
@@ -97,12 +114,18 @@ class FavoriteMovies : Fragment(), ListenerMovies{
     }
 
     override fun getDetailMovie(movie: ResponseMovie) {
-        TODO("Not yet implemented")
+        val detailMovieId = Intent(requireContext(), DetailsActivity::class.java)
+        detailMovieId.putExtra("MOVIE_ID", Movie.parserToMovie(movie))
+        startActivity(detailMovieId)
     }
 
     override fun getCast(movieId: Int) {
-        TODO("Not yet implemented")
+        val castMovieId = Intent (requireContext(), DetailsActivity::class.java)
+        castMovieId.putExtra("MOVIE_ID", movieId)
+        startActivity(castMovieId)
+
     }
+
 
     override fun handleFavorite(movie: ResponseMovie, isChecked: Boolean) {
         val favorite = Favorite(movie.id.toLong()
@@ -116,4 +139,6 @@ class FavoriteMovies : Fragment(), ListenerMovies{
             viewModelFavorites.deleteFavorite(favorite)
         }
     }
+
+
 }

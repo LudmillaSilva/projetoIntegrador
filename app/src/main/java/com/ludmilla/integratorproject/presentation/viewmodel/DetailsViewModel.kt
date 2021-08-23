@@ -8,6 +8,7 @@ import com.ludmilla.integratorproject.data.factory.Network
 import com.ludmilla.integratorproject.data.repository.MovieRepository
 import com.ludmilla.integratorproject.data.repository.MovieRepositoryImpl
 import com.ludmilla.integratorproject.data.response.GenreResp
+import com.ludmilla.integratorproject.data.response.ReleaseDateResponse
 import com.ludmilla.integratorproject.data.response.ResponseCast
 import com.ludmilla.integratorproject.data.response.ResponseMovie
 import com.ludmilla.integratorproject.domain.MovieDetail
@@ -22,6 +23,7 @@ class DetailsViewModel(private val movieRepository: MovieRepositoryImpl): ViewMo
     val liveGenreResp: MutableLiveData<List<GenreResp>> = MutableLiveData<List<GenreResp>>()
     val liveResponseSearch: MutableLiveData<List<ResponseMovie>> = MutableLiveData<List<ResponseMovie>>()
     val liveResponseCast: MutableLiveData<ResponseCast> = MutableLiveData<ResponseCast>()
+    val liveReleaseDate : MutableLiveData<ReleaseDateResponse> = MutableLiveData<ReleaseDateResponse>()
 
     fun getDetailMovie(movieId: Int){
         movieRepository.getPopularMovies()
@@ -64,6 +66,15 @@ class DetailsViewModel(private val movieRepository: MovieRepositoryImpl): ViewMo
             }).addToDispose()
     }
 
+    fun getParentalGuide  (movieId: Int){
+        movieRepository.getParentalGuide(movieId)
+            .compose(Network.applySingleTransformer())
+            .subscribe({
+                liveReleaseDate.value = it
+            },{
+                print(it.message)
+            }).addToDispose()
+    }
 
     /*fun getMovieByGenre(genreId: String){
         movieRepository.getMoviesByGenre(genreId)

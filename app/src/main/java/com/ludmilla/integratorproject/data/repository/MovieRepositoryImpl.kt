@@ -46,5 +46,12 @@ class MovieRepositoryImpl(private val favoriteDao: FavoriteDao):MovieRepository 
             .map {it}
     }
 
+    override fun getParentalGuide(movieId: Int): Single<ReleaseDateResponse> {
+        return remoteSource.getParentalGuide(movieId).map {
+            it.results.filter {certification -> certification.region == "BR" }.random().release_date.random()
+        }
+    }
+
+
 
 }
