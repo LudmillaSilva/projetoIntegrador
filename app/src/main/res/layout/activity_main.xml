@@ -101,7 +101,7 @@
             app:layout_constraintStart_toStartOf="@+id/searchMovie"
             app:layout_constraintTop_toBottomOf="@+id/searchMovie" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/searchModeTxt"
             style="@style/movieTitle"
             android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/greenIcon"
             app:layout_constraintStart_toStartOf="@+id/searchModeTxt"
             app:layout_constraintTop_toBottomOf="@+id/searchModeTxt" />
-
+-->
         <!--<FrameLayout
             android:id="@+id/searchFragmentContainer"
             android:layout_width="match_parent"
@@ -148,7 +148,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tabLayout"
             tools:listitem="@layout/item_genre" />
 
-        <ProgressBar
+       <!-- <ProgressBar
             android:id="@+id/loadingHome"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -157,7 +157,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMoviesHome"
             android:layout_width="wrap_content"

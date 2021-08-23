@@ -1,6 +1,5 @@
 package com.ludmilla.integratorproject.presentation.adapter
 
-import android.icu.text.Transliterator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter

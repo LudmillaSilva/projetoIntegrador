@@ -56,18 +56,21 @@ class MainActivity : AppCompatActivity() {
         addActions()
 
 
-        searchMovie.setOnClickListener(){
-            tablayout.visibility = View.GONE
-            viewPager.visibility = View.GONE
-            greenIcon.visibility = View.VISIBLE
-            searchModeTxt.visibility = View.VISIBLE
 
-        }
 
     }
 
 
     private fun addActions(){
+     /*   searchMovie.setOnSearchClickListener{
+            tablayout.visibility = View.GONE
+            viewPager.visibility = View.GONE
+            greenIcon.visibility = View.VISIBLE
+            searchModeTxt.visibility = View.VISIBLE
+
+
+        }*/
+
         searchMovie.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchMovie.clearFocus()
